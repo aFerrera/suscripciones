@@ -8,11 +8,11 @@
     <h2>BIENVENIDO <?=$this->session->userdata('usuario'); ?></h2>
 
     <div class="personalInfo card">
-      <table>
+      <table class="highlight">
         <?php foreach ($user as $u): ?>
-        <tr><th colspan="2">Información de la cuenta</th></tr>
+        <tr><th colspan="3">Información de la cuenta</th></tr>
         <tr>
-          <td>DNI</td><td><?php echo $u['DNI'];?></td>
+          <td>DNI</td><td><?php echo $u['DNI'];?></td><td></td>
         </tr>
         <tr>
           <td>Saldo</td><td><?php echo $u['saldo']; ?>€</td>
@@ -27,15 +27,17 @@
         <tr>
           <td>Dado de alta</td>
           <?php if($this->session->userdata('alta')==0){?>
-            <td>NO</td>
+            <td>NO</td><td></td>
             <?php }else{?>
-              <td>SI</td>
+              <td>SI</td><td></td>
               <?php }?>
             </tr>
             <?php endforeach; ?>
           </table>
+        </div>
+        <div class="card personalInfo">
           <?php if($this->session->userdata('alta')==1){?>
-          <table id="suscripTabLe">
+          <table id="suscripTabLe" class="highlight">
             <?php foreach ($suscrip as $i): ?>
             <tr><th colspan="2">Suscripción</th></tr>
             <tr>
@@ -45,8 +47,16 @@
               <td>Coste mensual</td><td><?php echo $i['coste']?>€</td>
             </tr>
             <tr>
+              <td>Dia de cobro</td><td>1 de cada mes</td>
+            </tr>
+            <tr>
               <td>Dar de baja</td>
-              <td><button type="button" name="button" class="btn waves-light waves-effect deep-orange lighten-4 black-text">BAJA</button></td>
+              <td>
+              <?= form_open('Suscripciones/baja', array('class'=>'form-horizontal')); ?>
+              <input type="hidden" name="sus" id="sus" value="<?php echo $i['id_suscripcion']; ?>"/>
+              <input type="hidden" name="customer" id="customer" value="<?=$this->session->userdata('usuario'); ?>"/>
+              <button type="submit" name="botonBaja" class="btn waves-light waves-effect deep-orange lighten-4 black-text">BAJA</button>
+            </td>
             </tr>
           <?php endforeach; ?>
           </table>
@@ -67,11 +77,11 @@
 
                     <div class="extraInfo">
                       <p><b>Coste:</b> <?php echo $item['coste']; ?>€</p>
-                      <p><b>Nº Suscritos:</b> <?php echo $item['n_suscritos']; ?></p>
+
                     </div>
                   </div>
                   <div class="card-action">
-                    <?php if($this->session->userdata('fondos') > $item['coste']){?>
+                    <?php if($this->session->userdata('fondos') > $item['coste'] && $this->session->userdata('alta') == 0){?>
                       <?= form_open('Suscripciones/alta', array('class'=>'form-horizontal')); ?>
                       <input type="hidden" name="usuario" id="usuario" value="<?=$this->session->userdata('usuario'); ?>"/>
                       <input type="hidden" name="suscripcion" id="suscripcion" value="<?php echo $item['id_suscripcion']; ?>"/>
@@ -79,7 +89,7 @@
                     </form>
                     <?php }else{?>
                       <p>
-                        No dispones de suficiente fondos para esta suscripción.
+                        No dispones de suficiente fondos para esta suscripción o bien ya estas suscrito a ella.
                       </p>
                       <?php }?>
                     </div>

@@ -29,4 +29,17 @@ class Suscripciones extends CI_Controller {
     $this->load->view('transacciones/altaCorrecta');
     $this->load->view('templates/footer');
   }
+
+  public function baja(){
+    $this->load->helper('form');
+    $usr = $this->input->post('customer');
+    $susc = $this->input->post('sus');
+
+    $query = $this->CI->Model_suscripciones->registrarBaja($usr, $susc);
+    $this->session->set_userdata('alta', 0);
+
+    $this->load->view('templates/header');
+    $this->load->view('transacciones/bajaCorrecta');
+    $this->load->view('templates/footer');
+  }
 }

@@ -21,7 +21,9 @@ class Model_suscripciones extends CI_Model {
       return $query->result_array();
     }
 
+    /*GUARDAR REGISTRO DE ALTAS*/
     public function registrarAlta($user, $suscrip){
+      /*Información del registro*/
       $data = array(
         'tipo' => 'alta suscripcion',
         'usuario' => $user,
@@ -37,11 +39,40 @@ class Model_suscripciones extends CI_Model {
       $this->db->update('usuario', $data2);
 
       $data3 = array(
-        'n_suscritos' => +1
+        'n_suscritos' => 'n_suscritos' + 1
       );
 
       $this->db->where('id_suscripcion', $suscrip);
       $this->db->update('suscripcion', $data3);
+
+      return $this->db->insert('registros', $data);
+    }
+
+    /*GUARDAR REGISTRO DE BAJAS*/
+    public function registrarBaja($user, $suscripcion){
+      /*Dar de baja al usuario*/
+      $data2 = array(
+        'alta' => 0
+      );
+
+      $this->db->where('nombre', $user);
+      $this->db->update('usuario', $data2);
+
+      /*reducimos el valor de numero de suscritos*/
+      $data3 = array(
+        'n_suscritos' => 'n_suscritos' - 1
+      );
+
+      $this->db->where('id_suscripcion', $suscripcion);
+      $this->db->update('suscripcion', $data3);
+
+      /*Información del registro*/
+      $data = array(
+        'tipo' => 'baja suscripcion',
+        'usuario' => $user,
+        'suscripcion' => $suscripcion,
+        'fecha' => standard_date('DATE_W3C', now())
+      );
 
       return $this->db->insert('registros', $data);
     }
