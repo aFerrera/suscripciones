@@ -9,6 +9,8 @@
     <h2>ADMINISTRAR TABLAS</h2>
     <a href='<?php echo site_url('home/usuarios')?>'>USUARIOS</a> |
     <a href='<?php echo site_url('home/suscripciones')?>'>SUSCRIPCIONES</a> |
+    <a href='<?php echo site_url('home/transacciones')?>'>TRANSACCIONES</a> |
+    <a href='<?php echo site_url('home/registros')?>'>REGISTROS</a> |
   </div>
   <div style='height:20px;'></div>
   <div>

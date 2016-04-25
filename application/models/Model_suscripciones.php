@@ -21,4 +21,29 @@ class Model_suscripciones extends CI_Model {
       return $query->result_array();
     }
 
+    public function registrarAlta($user, $suscrip){
+      $data = array(
+        'tipo' => 'alta suscripcion',
+        'usuario' => $user,
+        'suscripcion' => $suscrip,
+        'fecha' => standard_date('DATE_W3C', now())
+      );
+
+      $data2 = array(
+        'alta' => 1
+      );
+
+      $this->db->where('nombre', $user);
+      $this->db->update('usuario', $data2);
+
+      $data3 = array(
+        'n_suscritos' => +1
+      );
+
+      $this->db->where('id_suscripcion', $suscrip);
+      $this->db->update('suscripcion', $data3);
+
+      return $this->db->insert('registros', $data);
+    }
+
 }

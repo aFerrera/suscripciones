@@ -104,6 +104,7 @@ footer {
 .personalInfo{
   background-color: #b5d7bf;
   padding-left: 20px;
+  width: 100%;
 }
 
 #suscripTabLe{
@@ -112,7 +113,7 @@ footer {
 }
 
 .personalInfo table{
-width: 400px;
+width: 100%;
 
 }
 

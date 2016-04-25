@@ -50,11 +50,16 @@
             <ul class="side-nav brown lighten-3" id="mobile-demo">
               <li><a href="<?=site_url('home/index')?>">HOME</a></li>
 
+              <?php if($this->session->userdata('admin') == 1){?>
+                <li><a href="<?=site_url('home/administrar')?>">Administrador</a></li>
+
+                <?php } ?>
+                <?php if($this->session->userdata('usuario')){?>
+                  <li><a href="<?=site_url('logins/logout')?>">Logout</a>
+                    <li><a href="<?=site_url('logins/principal')?>">Mi Cuenta</a></li>
+                    <?php }else{ ?>
               <li><a href="<?=site_url('logins/registrarse')?>">Registrarse</a></li>
-
-              <li><a href="<?=site_url('logins/principal')?>">Mi Cuenta</a></li>
-
-              <li><a href="">Mobile</a></li>
+                      <?php }?>
             </ul>
           </div>
         </nav>

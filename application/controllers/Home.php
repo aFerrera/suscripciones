@@ -36,7 +36,7 @@ class Home extends CI_Controller {
     ->set_subject('usuario')
     ->columns('id_usuario','nombre','DNI','login','password','tel', 'email', 'saldo', 'alta');
 
-    $crud->fields('nombre','DNI','login','password', 'email', 'tel');
+    $crud->fields('nombre','DNI','login','password', 'email', 'tel', 'alta');
     $crud->required_fields('nombre','DNI', 'login', 'password');
 
   $crud->callback_before_insert(array($this,'encrypt_password'));
@@ -65,6 +65,38 @@ class Home extends CI_Controller {
 
     $crud->fields('nombre','descripcion','coste','n_suscritos');
     $crud->required_fields('nombre','descripcion','coste','n_suscritos');
+
+    $output = $crud->render();
+
+    $this->_example_output($output);
+  }
+
+  function transacciones()
+  {
+    $crud = new grocery_CRUD();
+
+    $crud->set_table('transaccion')
+    ->set_subject('transaccion')
+    ->columns('id_transaccion','usuario','tipo','cantidad','fecha');
+
+    $crud->fields('id_transaccion','usuario','tipo','cantidad','fecha');
+    $crud->required_fields('id_transaccion','usuario','tipo','cantidad','fecha');
+
+    $output = $crud->render();
+
+    $this->_example_output($output);
+  }
+
+  function registros()
+  {
+    $crud = new grocery_CRUD();
+
+    $crud->set_table('registros')
+    ->set_subject('registros')
+    ->columns('id_reg','tipo','usuario','suscripcion','fecha');
+
+    $crud->fields('id_reg','tipo','usuario','suscripcion','fecha');
+    $crud->required_fields('id_reg','tipo','usuario','suscripcion','fecha');
 
     $output = $crud->render();
 

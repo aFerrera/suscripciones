@@ -36,17 +36,19 @@
           </table>
           <?php if($this->session->userdata('alta')==1){?>
           <table id="suscripTabLe">
+            <?php foreach ($suscrip as $i): ?>
             <tr><th colspan="2">Suscripción</th></tr>
             <tr>
-              <td>suscripcion</td><td></td>
+              <td>suscripcion</td><td><?php echo $i['nombre']?></td>
             </tr>
             <tr>
-              <td>Coste mensual</td><td>€</td>
+              <td>Coste mensual</td><td><?php echo $i['coste']?>€</td>
             </tr>
             <tr>
               <td>Dar de baja</td>
-              <td><button type="button" name="button">BAJA</button></td>
+              <td><button type="button" name="button" class="btn waves-light waves-effect deep-orange lighten-4 black-text">BAJA</button></td>
             </tr>
+          <?php endforeach; ?>
           </table>
           <?php }?>
         </div>
@@ -70,16 +72,20 @@
                   </div>
                   <div class="card-action">
                     <?php if($this->session->userdata('fondos') > $item['coste']){?>
-                    <button type="button" name="button" class="btn waves-light waves-effect deep-orange lighten-4 black-text">SUSCRIBIRSE</button>
+                      <?= form_open('Suscripciones/alta', array('class'=>'form-horizontal')); ?>
+                      <input type="hidden" name="usuario" id="usuario" value="<?=$this->session->userdata('usuario'); ?>"/>
+                      <input type="hidden" name="suscripcion" id="suscripcion" value="<?php echo $item['id_suscripcion']; ?>"/>
+                      <button type="submit" name="but" class="btn waves-light waves-effect deep-orange lighten-4 black-text">SUSCRIBIRSE</button>
+                    </form>
                     <?php }else{?>
                       <p>
-                        No dispones de suficiente fondos para enta suscripción.
+                        No dispones de suficiente fondos para esta suscripción.
                       </p>
                       <?php }?>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           <?php endforeach; ?>
         </div>
       </div>
