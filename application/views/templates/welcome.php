@@ -36,7 +36,7 @@
       <?= form_close(); ?>
     </div>
   </div>
-  <div class="">
+  <div class="masContenido center-block center-align">
     
   </div>
 </main>
