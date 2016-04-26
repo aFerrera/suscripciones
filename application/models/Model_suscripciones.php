@@ -38,8 +38,14 @@ class Model_suscripciones extends CI_Model {
       $this->db->where('nombre', $user);
       $this->db->update('usuario', $data2);
 
+      /*modificamos numero de suscritos*/
+      $this->db->select('n_suscritos');
+      $this->db->where('id_suscripcion', $suscrip);
+      $aux = $this->db->get('suscripcion');
+
+      $v = $aux['n_suscritos'];
       $data3 = array(
-        'n_suscritos' => 'n_suscritos' + 1
+        'n_suscritos' => $v + 1
       );
 
       $this->db->where('id_suscripcion', $suscrip);
@@ -59,8 +65,12 @@ class Model_suscripciones extends CI_Model {
       $this->db->update('usuario', $data2);
 
       /*reducimos el valor de numero de suscritos*/
+      $this->db->select('n_suscritos');
+      $this->db->where('id_suscripcion', $suscripcion);
+      $aux = $this->db->get('suscripcion');
+      $v = $aux['n_suscritos'];
       $data3 = array(
-        'n_suscritos' => 'n_suscritos' - 1
+        'n_suscritos' => $v - 1
       );
 
       $this->db->where('id_suscripcion', $suscripcion);

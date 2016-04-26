@@ -81,7 +81,7 @@
                     </div>
                   </div>
                   <div class="card-action">
-                    <?php if($this->session->userdata('fondos') > $item['coste'] && $this->session->userdata('alta') == 0){?>
+                    <?php if($this->session->userdata('fondos') > $item['coste']){?>
                       <?= form_open('Suscripciones/alta', array('class'=>'form-horizontal')); ?>
                       <input type="hidden" name="usuario" id="usuario" value="<?=$this->session->userdata('usuario'); ?>"/>
                       <input type="hidden" name="suscripcion" id="suscripcion" value="<?php echo $item['id_suscripcion']; ?>"/>
@@ -89,8 +89,11 @@
                     </form>
                     <?php }else{?>
                       <p>
-                        No dispones de suficiente fondos para esta suscripción o bien ya estas suscrito a ella.
+                        No dispones de suficiente fondos para esta suscripción.
                       </p>
+                      <?php }?>
+                      <?php if($this->session->userdata('alta') == 1){?>
+                        <a href="#" class="btn waves-light waves-effect deep-orange lighten-4 black-text">Ver contenido</a>
                       <?php }?>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-<footer class="page-footer orange lighten-5">
+<footer class="page-footer blue-grey lighten-4">
   <div class="container">
     <div class="row">
       <div class="col l6 s12">
@@ -21,6 +21,14 @@
     </div>
   </div>
 </footer>
+
+<script src="<?=base_url('assets/js/jquery.card.js')?>"></script>
+<script type="text/javascript">
+
+
+</script>
+
+
 </body>
 
 </html>
