@@ -53,10 +53,13 @@ nav.navbar-material {
   color: #42ec4f ;
 }
 
-#sideMenu li :hover{
-  color: #1b5e20 ;
+#mobile-demo li :hover{
+  color: #42ec4f ;
 }
 
+#mobile-demo{
+  background-color: #584b4f;
+}
 
 
 .welcome{

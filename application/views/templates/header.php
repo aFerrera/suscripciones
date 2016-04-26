@@ -47,7 +47,7 @@
                   <?php }?>
               </li>
             </ul>
-            <ul class="side-nav brown lighten-3" id="mobile-demo">
+            <ul class="side-nav " id="mobile-demo">
               <li><a href="<?=site_url('home/index')?>">HOME</a></li>
 
               <?php if($this->session->userdata('admin') == 1){?>
