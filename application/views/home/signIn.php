@@ -25,7 +25,7 @@
     <input type="password" name="confirmPass" class="validate"/>
 
     <label for="newTel">Teléfono*</label>
-    <input type="text" name="newTel" class="validate" size="14"/>
+    <input type="text" name="newTel" class="validate" maxlength="9"/>
 
     <label for="newMail">E-mail*</label>
     <input type="text" name="newMail" class="validate"/>
