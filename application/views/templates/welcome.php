@@ -13,6 +13,11 @@
     <div class="buttons">
       <?php if($this->session->userdata('usuario')){?>
       <a href="<?=site_url('logins/principal')?>" class="btn waves-light waves-effect deep-orange lighten-4 black-text">Mi cuenta</a>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $("#login").hide();
+        });
+      </script>
       <?php }else{?>
 
         <a href="<?=site_url('Logins/signIn')?>" class="btn waves-light waves-effect deep-orange lighten-4 black-text">REGISTRARSE</a>
@@ -20,7 +25,7 @@
       </div>
       <div class="validationErrors">
         <?php echo validation_errors(); ?>
-        
+
       </div>
 
       <div id="login" class="center-block">
