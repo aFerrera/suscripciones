@@ -4,10 +4,7 @@ $(document).ready(function(){
 $(".button-collapse").sideNav();
 
 $('#login').hide();
-
-$('#loginBtn').click(function(){
-  $('#login').slideToggle(700);
-});
+$('#login').slideDown(700);
 
 $('#myFormCard').card({
     // a selector or DOM element for the container

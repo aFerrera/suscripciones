@@ -6,7 +6,7 @@
 <?php endforeach; ?>
 <main>
   <div class="center-block center-align">
-    <h2>ADMINISTRAR TABLAS</h2>
+    <h2 class="sectionHeader">ADMINISTRAR TABLAS</h2>
     <a href='<?php echo site_url('home/usuarios')?>'>USUARIOS</a> |
     <a href='<?php echo site_url('home/suscripciones')?>'>SUSCRIPCIONES</a> |
     <a href='<?php echo site_url('home/transacciones')?>'>TRANSACCIONES</a> |

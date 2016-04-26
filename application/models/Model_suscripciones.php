@@ -43,7 +43,9 @@ class Model_suscripciones extends CI_Model {
       $this->db->where('id_suscripcion', $suscrip);
       $aux = $this->db->get('suscripcion');
 
-      $v = $aux['n_suscritos'];
+      foreach ($aux->result() as $row) {
+        $v = $row->n_suscritos;
+      }
       $data3 = array(
         'n_suscritos' => $v + 1
       );
@@ -68,7 +70,10 @@ class Model_suscripciones extends CI_Model {
       $this->db->select('n_suscritos');
       $this->db->where('id_suscripcion', $suscripcion);
       $aux = $this->db->get('suscripcion');
-      $v = $aux['n_suscritos'];
+
+      foreach ($aux->result() as $row) {
+        $v = $row->n_suscritos;
+      }
       $data3 = array(
         'n_suscritos' => $v - 1
       );
@@ -85,6 +90,12 @@ class Model_suscripciones extends CI_Model {
       );
 
       return $this->db->insert('registros', $data);
+    }
+
+    public function verContenido($codigo){
+      $this->db->where('id_suscripcion', $codigo);
+      $query = $this->db->get('suscripcion');
+      return $query->result_array();
     }
 
 }
