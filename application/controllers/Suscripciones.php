@@ -17,6 +17,7 @@ class Suscripciones extends CI_Controller {
     $this->load->library('grocery_CRUD');
   }
 
+  /*ALTA SUSCRIPCION*/
   public function alta(){
     $this->load->helper('form');
     $usr = $this->input->post('usuario');
@@ -30,6 +31,7 @@ class Suscripciones extends CI_Controller {
     $this->load->view('templates/footer');
   }
 
+  /*BAJA SUSCRIPCION*/
   public function baja(){
     $this->load->helper('form');
     $usr = $this->input->post('customer');
@@ -40,6 +42,19 @@ class Suscripciones extends CI_Controller {
 
     $this->load->view('templates/header');
     $this->load->view('transacciones/bajaCorrecta');
+    $this->load->view('templates/footer');
+  }
+
+  /*CONTENIDO SUSCRIPCION*/
+  public function verSuscripcion(){
+    $this->load->helper('form');
+
+    $codigo = $this->input->post('codigoSus');
+
+    $data['sus'] = $this->CI->Model_suscripciones->verContenido($codigo);
+
+    $this->load->view('templates/header');
+    $this->load->view('home/suscripcion', $data);
     $this->load->view('templates/footer');
   }
 }

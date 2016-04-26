@@ -31,7 +31,7 @@ class Logins extends CI_Controller {
   /*PRINCIPAL*/
   public function principal(){
     $data['suscrip'] = $this->Model_suscripciones->get_suscripciones();
-    
+
     $dni = $this->session->userdata('DNI');
     $data['user'] = $this->Model_Usuario->getUser($dni);
     $this->load->view('templates/header');
@@ -107,7 +107,8 @@ class Logins extends CI_Controller {
     $this->form_validation->set_rules('newUser', 'User', 'required');
     $this->form_validation->set_rules('newDni', 'Dni', 'required');
     $this->form_validation->set_rules('newLogin', 'LoginName', 'required');
-    $this->form_validation->set_rules('newPass', 'Password', 'required');
+    $this->form_validation->set_rules('newPass', 'Password', 'required|matches[confirmPass]');
+    $this->form_validation->set_rules('confirmPass', 'Password Confirmation', 'required');
     $this->form_validation->set_rules('newTel', 'Telefono', 'required');
     $this->form_validation->set_rules('newMail', 'Email', 'required');
 
@@ -124,6 +125,7 @@ class Logins extends CI_Controller {
       $this->load->view('templates/footer');
     } else {
       $this->Model_Usuario->insertUser($nuevoUser, $nuevoDni, $nuevoLogin ,$nuevaPass, $nuevoTel, $nuevoMail);
+       echo '<script language="javascript">alert("Registro completo!, ahora inicia session ");</script>'; 
       $this->load->view('templates/header');
       $this->load->view('templates/welcome');
       $this->load->view('templates/footer');

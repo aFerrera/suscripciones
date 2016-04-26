@@ -47,9 +47,6 @@
               <td>Coste mensual</td><td><?php echo $i['coste']?>€</td>
             </tr>
             <tr>
-              <td>Dia de cobro</td><td>1 de cada mes</td>
-            </tr>
-            <tr>
               <td>Dar de baja</td>
               <td>
               <?= form_open('Suscripciones/baja', array('class'=>'form-horizontal')); ?>
@@ -77,7 +74,7 @@
 
                     <div class="extraInfo">
                       <p><b>Coste:</b> <?php echo $item['coste']; ?>€</p>
-
+                      <p><b>Nº Suscritos:</b> <?php echo $item['n_suscritos']; ?>€</p>
                     </div>
                   </div>
                   <div class="card-action">
@@ -85,7 +82,7 @@
                       <?= form_open('Suscripciones/alta', array('class'=>'form-horizontal')); ?>
                       <input type="hidden" name="usuario" id="usuario" value="<?=$this->session->userdata('usuario'); ?>"/>
                       <input type="hidden" name="suscripcion" id="suscripcion" value="<?php echo $item['id_suscripcion']; ?>"/>
-                      <button type="submit" name="but" class="btn waves-light waves-effect deep-orange lighten-4 black-text">SUSCRIBIRSE</button>
+                      <button id="botonAlta" type="submit" name="but" class="btn waves-light waves-effect deep-orange lighten-4 black-text">SUSCRIBIRSE</button>
                     </form>
                     <?php }else{?>
                       <p>
@@ -93,7 +90,15 @@
                       </p>
                       <?php }?>
                       <?php if($this->session->userdata('alta') == 1){?>
-                        <a href="#" class="btn waves-light waves-effect deep-orange lighten-4 black-text">Ver contenido</a>
+                        <?= form_open('Suscripciones/verSuscripcion', array('class'=>'form-horizontal')); ?>
+                        <input type="hidden" name="codigoSus"  value="<?php echo $item['id_suscripcion']; ?>"/>
+                        <button id="botonVer" type="submit" name="butVer" class="btn waves-light waves-effect deep-orange lighten-4 black-text">VER CONTENIDOS</button>
+                      </form>
+                        <script type="text/javascript">
+                          $(document).ready(function(){
+                            $("#botonAlta").hide();
+                          });
+                        </script>
                       <?php }?>
                     </div>
                   </div>
