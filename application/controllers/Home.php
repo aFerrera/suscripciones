@@ -103,6 +103,36 @@ class Home extends CI_Controller {
     $this->_example_output($output);
   }
 
+  function wsrequest(){
+    $crud = new grocery_CRUD();
+
+    $crud->set_table('wsrequest')
+    ->set_subject('wsrequest')
+    ->columns('id','tipo','transaction','msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
+
+    $crud->fields('id','tipo','transaction','msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
+    $crud->required_fields('id','tipo','transaction','msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
+
+    $output = $crud->render();
+
+    $this->_example_output($output);
+  }
+
+  function wsresponse(){
+    $crud = new grocery_CRUD();
+
+    $crud->set_table('wsresponse')
+    ->set_subject('wsresponse')
+    ->columns('statusCode','statusMessage','txId','token','tipo', 'fecha');
+
+    $crud->fields('statusCode','statusMessage','txId','token','tipo', 'fecha');
+    $crud->required_fields('statusCode','statusMessage','txId','token','tipo', 'fecha');
+
+    $output = $crud->render();
+
+    $this->_example_output($output);
+  }
+
   public function _example_output($output = null)
   {
     $this->load->view('templates/header');
