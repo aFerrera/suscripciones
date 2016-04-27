@@ -5,7 +5,7 @@
     });
   </script>
   <div class="contenido center-block">
-    <h2>BIENVENIDO <?=$this->session->userdata('usuario'); ?></h2>
+    <h2>Bienvenido/a <?=$this->session->userdata('usuario'); ?></h2>
 
     <div class="personalInfo card">
       <table class="highlight">
@@ -74,7 +74,7 @@
 
                     <div class="extraInfo">
                       <p><b>Coste:</b> <?php echo $item['coste']; ?>€</p>
-                      <p><b>Nº Suscritos:</b> <?php echo $item['n_suscritos']; ?>€</p>
+                      <p><b>Nº Suscritos:</b> <?php echo $item['n_suscritos']; ?></p>
                     </div>
                   </div>
                   <div class="card-action">
