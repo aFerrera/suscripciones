@@ -14,7 +14,7 @@ class WebService extends CI_Controller {
     $this->load->helper('form');
     $responseToken = $this->Model_webService->getToken();
 
-    echo '<p>'.$responseToken.'</p>';
+    echo '<p>respuesta token-> '.$responseToken.'</p>';
 
     $xml=simplexml_load_string($responseToken) or die("Error: Cannot create object");
     $data['statusCode'] = $xml->statusCode;
@@ -30,7 +30,7 @@ class WebService extends CI_Controller {
 
       echo 'ok';
       $responseBill = $this->Model_webService->peticionCobro($data['token']);
-      echo '<p>'.$responseBill.'</p>';
+      echo '<p>respuesta bill -> '.$responseBill.'</p>';
       $xml=simplexml_load_string($responseBill) or die("Error: Cannot create object");
       $data['statusCode'] = $xml->statusCode;
       $data['statusMessage'] = $xml->statusMessage;
@@ -40,6 +40,20 @@ class WebService extends CI_Controller {
       $data['fecha']= standard_date('DATE_W3C', now());
 
       $this->Model_webService->setResponse($data);
+
+      $responseSms = $this->Model_webService->mensajes($xml->statusCode);
+      echo '<p>respuesta sms -> '.$responseSms.'</p>';
+      $xml2=simplexml_load_string($responseSms) or die("Error: Cannot create object");
+      $data2['statusCode'] = $xml2->statusCode;
+      $data2['statusMessage'] = $xml2->statusMessage;
+      $data2['txId'] = $xml2->txId;
+      $data2['token'] = NULL;
+      $data2['tipo'] = 'Envio de sms';
+      $data2['fecha']= standard_date('DATE_W3C', now());
+
+      echo '<script language="javascript">alert("Nos disponemos a insertar la respuesta");</script>';
+      $this->Model_webService->setResponse($data2);
+
 
     } else {
       echo '<script language="javascript">alert("Algo falló al pedir el token, reintentando..");</script>';

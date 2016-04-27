@@ -1,5 +1,5 @@
-<main>
-  <div class="welcome center-align center-block">
+<main id="welcomeMain">
+  <div id="welcome" class="welcome center-align center-block">
           <img id="logo" alt="kitmaker_logo" src="<?= base_url('assets/img/kitmaker_logo.png')?>">
           <p>
             Bienvenido a la nueva web de suscripciones premium!.

@@ -31,7 +31,7 @@
     <input type="text" name="newMail" class="validate"/>
 
 
-    <input type="submit" name="submit" id="nuevoUsuario" value="Gegistrarse" class="waves-light btn deep-orange lighten-4 black-text"/>
+    <input type="submit" name="submit" id="nuevoUsuario" value="Registrarse" class="waves-light btn deep-orange lighten-4 black-text"/>
 
   </form>
   </div>
