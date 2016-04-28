@@ -4,12 +4,12 @@
       Usuario> <b><?=$this->session->userdata('usuario')?></b>- <?= date('d-m-Y H:i') ?>
     </p>
     <?php foreach ($sus as $suscripcion): ?>
-      <div class="susHeader">
+      <div class="sectionHeader">
         <h3><?php echo $suscripcion['nombre']?></h3>
-        <p>
-          <?php echo $suscripcion['descripcion']?>
-        </p>
       </div>
+      <p>
+        <?php echo $suscripcion['descripcion']?>
+      </p>
     <?php endforeach; ?>
   </div>
 </main>

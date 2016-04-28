@@ -108,30 +108,32 @@ class Home extends CI_Controller {
 
     $crud->set_table('wsrequest')
     ->set_subject('wsrequest')
-    ->columns('id','tipo','transaction','msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
+    ->columns('id','tipo', 'statusCode', 'statusMessage', 'txId', 'msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
 
-    $crud->fields('id','tipo','transaction','msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
-    $crud->required_fields('id','tipo','transaction','msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
+    $crud->fields('id','tipo', 'statusCode', 'statusMessage', 'txId', 'msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
+    $crud->required_fields('id','tipo', 'statusCode', 'statusMessage', 'txId', 'msisdn','shortcode', 'text', 'amount', 'token', 'fecha');
 
     $output = $crud->render();
 
     $this->_example_output($output);
   }
 
-  function wsresponse(){
+  function sms(){
     $crud = new grocery_CRUD();
 
-    $crud->set_table('wsresponse')
-    ->set_subject('wsresponse')
-    ->columns('statusCode','statusMessage','txId','token','tipo', 'fecha');
+    $crud->set_table('sms')
+    ->set_subject('sms')
+    ->columns('id_sms','destino', 'texto', 'fecha');
 
-    $crud->fields('statusCode','statusMessage','txId','token','tipo', 'fecha');
-    $crud->required_fields('statusCode','statusMessage','txId','token','tipo', 'fecha');
+    $crud->fields('id_sms','destino', 'texto', 'fecha');
+    $crud->required_fields('id_sms','destino', 'texto', 'fecha');
 
     $output = $crud->render();
 
     $this->_example_output($output);
   }
+
+
 
   public function _example_output($output = null)
   {

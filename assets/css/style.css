@@ -14,14 +14,19 @@ nav.navbar-material {
   background: #584b4f;
 
 }
+
+.nav-wrapper a{
+  color: #69f0ae;
+}
 .navbar-material .nav-wrapper > ul > li > a {
   color: white;
 }
 .navbar-material .nav-wrapper > ul > li > a :hover{
-  color: #42ec4f ;
+  color: #69f0ae ;
 }
 .navbar-material .nav-wrapper .brand-logo img {
   height: 64px;
+  color: #69f0ae;
 }
 .navbar-material .nav-wrapper .button-collapse i {
   color: white;
@@ -38,7 +43,7 @@ nav.navbar-material {
 
 #logo
 {
-  height: 25px;
+  height: 30px;
   margin-top: 20px;
 
 }
@@ -50,21 +55,28 @@ nav.navbar-material {
 
 
 #topMenu li :hover{
-  color: #42ec4f ;
+  color: #69f0ae ;
 }
 
 #adminMenu{
     background: #584b4f;
-
+    margin: 0;
     padding: 10px;
+    height: 60px;
 }
 
 #adminMenu li :hover{
-    color: #42ec4f ;
+    color:#69f0ae !important;
+}
+
+
+#adminMenu li{
+    float: left;
+    margin-left: 10px;
 }
 
 #mobile-demo li :hover{
-  color: #42ec4f ;
+  color: #69f0ae ;
 }
 
 #mobile-demo{
@@ -74,10 +86,21 @@ nav.navbar-material {
 
 .welcome{
   padding: 20px;
-  width: 100%;
-  height: 800px;
-background-color: #b5d7bf;
 
+  height: 1000px;
+  background-color: #b5d7bf;
+
+}
+.subWelcome{
+    z-index: 1;
+
+    border-radius: 10px;
+}
+.pes{
+  padding: 5px;
+  margin: 5px;
+
+  border-radius: 10px;
 }
 
 #welcomeMain{
@@ -88,8 +111,7 @@ background-color: #b5d7bf;
   width: 80%;
   padding: 20px;
   margin: 20px auto 10px auto;
-  background-color: #faf6ec;
-  border: solid 1px #b5d7bf;
+  background-color: white;
   border-radius: 5px;
   display: block;
   z-index: 100;
@@ -128,20 +150,21 @@ footer {
 }
 
 .personalInfo{
-  background-color: #b5d7bf;
+
   padding-left: 20px;
   padding-right: 20px;
-  width: 100%;
+
 }
 
-#suscripTabLe{
-
-
+th{
+    background-color: #69f0ae;
 }
 
 .personalInfo table{
-width: 100%;
-
+width: 80%;
+margin: 10px auto 10px auto;
+border: solid 1px #2E484D;
+background-color: white;
 }
 
 .contenido{
@@ -171,6 +194,7 @@ width: 100%;
   background-color: #b5d7bf;
   text-align: center;
   padding: 30px;
+  margin: 0;
 }
 
 .validationErrors{
@@ -179,4 +203,13 @@ width: 100%;
   border-radius: 5px;
   padding-left: 20px;
   background-color: #ffe5e5;
+}
+
+.disponibles{
+  margin: 10px auto 10px auto;
+}
+
+.cartas{
+margin: 0 auto;
+
 }
