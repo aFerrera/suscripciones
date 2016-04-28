@@ -23,6 +23,32 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 
+  <style media="screen">
+  .card-content{
+    height: 200px;
+    background-image: url('<?=base_url('assets/img/games.png')?>');
+  }
+
+  .welcome{
+    background-image: url('<?=base_url('assets/img/games.png')?>');
+  }
+
+  .personalInfo{
+    background-image: url('<?=base_url('assets/img/mountains.jpg')?>');
+  }
+
+  footer{
+    background-image: url('<?=base_url('')?>');
+  }
+
+  .sectionHeader{
+    background-image: url('<?=base_url('assets/img/games.png')?>');
+  }
+
+  th{
+      background-image: url('<?=base_url('assets/img/games.png')?>');
+  }
+  </style>
 </head>
 <body>
   <header>

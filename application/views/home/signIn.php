@@ -1,5 +1,5 @@
 <main>
-  <h2 class="sectionHeader">FORMULARIO DE REGISTO</h2>
+  <h4 class="sectionHeader">FORMULARIO DE REGISTO</h4>
   <div id="signIn" class="left-align center-block">
 
     <div class="validationErrors">
@@ -31,7 +31,7 @@
     <input type="text" name="newMail" class="validate"/>
 
 
-    <input type="submit" name="submit" id="nuevoUsuario" value="Registrarse" class="waves-light btn deep-orange lighten-4 black-text"/>
+    <input type="submit" name="submit" id="nuevoUsuario" value="Registrarse" class="waves-light btn green accent-2 black-text"/>
 
   </form>
   </div>

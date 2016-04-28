@@ -18,6 +18,11 @@ class Model_usuario extends CI_Model {
     return $query->result_array();
   }
 
+  function getUserByName($name){
+    $this->db->where('nombre', $name);
+    return $this->db->get('usuario');
+  }
+
   /*REGISTRO USUARIO*/
   function insertUser($nombre, $dni, $login, $pass, $tel, $mail) {
     $data = array(

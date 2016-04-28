@@ -11,193 +11,104 @@ class Model_webService extends CI_Model {
   public function __construct() {
     $this->load->database();
     $this->load->helper('date');
+    $this->load->model('Model_suscripciones');
   }
 
-  //peticion de token al WS
-  public function getToken(){
-    $id = $this->getId();
+  /*REQUEST DE TOKEN*/
+  public function getToken($data){
+    $trans = $this->getId();
 
-    $tran = base_convert( $id, 10, 36 );
-
-    $data['id'] = $id;
     $data['tipo'] = 'ObtencionToken';
-    $data['transaction'] = $tran;
-    $data['msisdn'] = NULL;
-    $data['shortcode'] = NULL;
+    $data['transaction'] = $trans;
     $data['text'] = NULL;
-    $data['amount'] = NULL;
     $data['token'] = NULL;
     $data['fecha']= standard_date('DATE_W3C', now());
 
-    $this->setRequest($data);
-
     $req = '<?xml version="1.0" encoding="UTF-8"?>
     <request>
-    <transaction>'.$tran.'</transaction>
+    <transaction>'.$trans.'</transaction>
     </request>';
 
     $url = "http://52.30.94.95/token";
+    $output = $this->requestWS($url, $req);
 
-    return $output = $this->requestWS($url, $req);
+    $xml=simplexml_load_string($output) or die("Error: Cannot create object");
+    $data['statusCode'] = $xml->statusCode;
+    $data['statusMessage'] = $xml->statusMessage;
+    $data['txId'] = $xml->txId;
+    $data['token'] = $xml->token;
+
+    return $data;
   }
 
+  /*obtenemos un código para 'transaction'*/
   public function getId(){
     $this->db->select_max('id');
     $query = $this->db->get('wsrequest');
-    return $query->result_array()[0]['id']+1;
+
+    $aux= $query->result_array()[0]['id']+1; //lo obtenemos a partir del id, así siempre será único.
+    $tran = base_convert( $aux, 10, 36 );
+    return $tran;
   }
 
-  //peticion de cobro al WS
-  public function peticionCobro ($token){
-    $id = $this->getId();
-    $tran = base_convert( $id, 10, 36 );
-    //numero de telefono facilitado
-    $msisdn = '666666666';
-    //coste de la suscripción
-    $amount = 13.99;
+  /*REQUEST DE COBRO*/
+  public function getBill ($data){
+    $trans = $this->getId();
 
-    $data['id'] = $id;
     $data['tipo'] = 'PeticionCobro';
-    $data['transaction'] = $tran;
-    $data['msisdn'] = $msisdn;
-    $data['shortcode'] = NULL;
-    $data['text'] = NULL;
-    $data['amount'] = $amount;
-    $data['token'] = $token;
-    $data['fecha']= standard_date('DATE_W3C', now());
-
-    $this->setRequest($data);
+    $data['transaction'] = $trans;
 
     $req = '<?xml version="1.0" encoding="UTF-8"?>
     <request>
-    <transaction>'.$tran.'</transaction>
-    <msisdn>'.$msisdn.'</msisdn>
-    <amount>'.$amount.'</amount>
-    <token>'.$token.'</token>
+    <transaction>'.$trans.'</transaction>
+    <msisdn>'.$data['msisdn'].'</msisdn>
+    <amount>'.$data['amount'].'</amount>
+    <token>'.$data['token'].'</token>
     </request>';
 
     $url = "http://52.30.94.95/bill";
 
-    return $output = $this->requestWS($url, $req);
+    $output = $this->requestWS($url, $req);
+
+    $xml = simplexml_load_string($output) or die("Error: Cannot create object");
+
+    $data['statusCode'] = $xml->statusCode;
+    $data['statusMessage'] = $xml->statusMessage;
+    $data['txId'] = $xml->txId;
+
+    return $data;
   }
 
-  function mensajes($response){
-    $id = $this->getId();
-    $tran = base_convert( $id, 10, 36 );
+  /*TENER EN CUENTA QUE MENSAJE HAI Q ENVIAR!!!!!!*/
+  public function getSms($data){
+    $trans = $this->getId();
 
-    //numero de telefono facilitado
-    $msisdn = '666666666';
+    $data['tipo'] = 'PeticionSms';
+    $data['transaction'] = $trans;
+    echo '<script language="javascript">alert("texto a enviar -> '.$data['text'].'");</script>';
 
-    switch ($response) {
-      case 'SUCCESS':
-      $info = 'Todo correcto';
+    $req = '<?xml version="1.0" encoding="UTF-8"?>
+    <request>
+    <shortcode>'.$data['shortcode'].'</shortcode>
+    <text>'.$data['text'].'</text>
+    <msisdn>'.$data['msisdn'].'</msisdn>
+    <transaction>'.$trans.'</transaction>
+    </request>';
 
+    $url = "http://52.30.94.95/send_sms";
 
-      $data['id'] = $id;
-      $data['tipo'] = 'Envio de sms';
-      $data['transaction'] = $tran;
-      $data['msisdn'] = $msisdn;
-      $data['shortcode'] = 666;
-      $data['text'] = $info;
-      $data['fecha']= standard_date('DATE_W3C', now());
+    $output = $this->requestWS($url, $req);
 
-      echo '<script language="javascript">alert("insertando request del mensaje");</script>';
-      $this->setRequest($data);
+    $xml = simplexml_load_string($output) or die("Error: Cannot create object");
 
-      $xml = '<?xml version="1.0" encoding="UTF-8"?>
-        <request>
-          <shortcode>'.$data['shortcode'].'</shortcode>
-          <text>'.$data['text'].'</text>
-          <msisdn>'.$data['msisdn'].'</msisdn>
-          <transaction>'.$data['transaction'].'</transaction>
-        </request>';
+    $data['statusCode'] = $xml->statusCode;
+    $data['statusMessage'] = $xml->statusMessage;
+    $data['txId'] = $xml->txId;
 
-      $url = 'http://52.30.94.95/send_sms';
-      return $output = $this->requestWS($url, $xml);
-      break;
-
-      case 'BAD_REQUEST_TYPE':
-      $data['info'] = 'Tipo de petición incorrecto';
-      break;
-
-      case 'NO_REQUEST':
-      $data['info'] = 'No se encontró ninguna petición';
-      break;
-
-      case 'SYSTEM_ERROR':
-      $data['info'] = 'Error del sistema';
-      break;
-
-      case 'INVALID_XML':
-      $data['info'] = 'XML inválido';
-      break;
-
-      case 'MISSING_PROPERTY':
-      $data['info'] = 'Falta algun campo de la petición';
-      break;
-
-      case 'MISSING_CREDENTIALS':
-      $data['info'] = 'No se encontraron credenciales';
-      break;
-
-      case 'INVALID_CREDENTIALS':
-      $data['info'] = 'Credenciales incorrectas';
-      break;
-
-      case 'TOKEN_SUCCESS':
-      $data['info'] = 'Petición de token correcta';
-      break;
-
-      case 'TOKEN_ALREADY_USED':
-      $data['info'] = 'Token ya esta en uso';
-      break;
-
-      case 'INVALID_TOKEN':
-      $data['info'] = 'El token es incorrecto';
-      break;
-
-      case 'NO_FUNDS':
-      $info = 'No hay fondos suficientes';
-
-      $data['id'] = $id;
-      $data['tipo'] = 'Envio de sms';
-      $data['transaction'] = $tran;
-      $data['msisdn'] = $msisdn;
-      $data['shortcode'] = 666;
-      $data['text'] = $info;
-      $data['fecha']= standard_date('DATE_W3C', now());
-
-      echo '<script language="javascript">alert("insertando request del mensaje");</script>';
-      $this->setRequest($data);
-
-      $xml = '<?xml version="1.0" encoding="UTF-8"?>
-        <request>
-          <shortcode>'.$data['shortcode'].'</shortcode>
-          <text>'.$data['text'].'</text>
-          <msisdn>'.$data['msisdn'].'</msisdn>
-          <transaction>'.$data['transaction'].'</transaction>
-        </request>';
-
-      $url = 'http://52.30.94.95/send_sms';
-      return $output = $this->requestWS($url, $xml);
-
-      break;
-
-      case 'CHARGING_ERROR':
-      $data['info'] = 'Error de carga';
-      break;
-
-      case 'DUPLICATED_TR':
-      $data['info'] = 'Petición duplicada';
-      break;
-
-      default:
-      $data['info'] = 'Respuesta desconocida.';
-      break;
-    }
+    return $data;
   }
 
-  //conexion ws
+  /*CONNEXION AL WEBSERVICE*/
   public function requestWS ($url, $xml) {
 
     $username = 'aferrera';
@@ -218,11 +129,99 @@ class Model_webService extends CI_Model {
 
   }
 
-  public function setResponse($data){
-    $this->db->insert('wsresponse', $data);
+  public function getAltas(){
+    $this->db->where('alta', 1);
+    $query = $this->db->get('usuario');
+
+    return $query->result_array();
   }
 
+  /*inser de request/response en la base de datos*/
   public function setRequest($data){
+    unset($data['individual']);
     $this->db->insert('wsrequest', $data);
   }
+
+  /*dar de baja al usuario*/
+  public function bajaSuscrip($tel){
+    $data = array(
+      'alta' => 0
+    );
+
+    $this->db->where('tel', $tel);
+    $this->db->update('usuario', $data);
+
+    $this->db->where('tel', $tel);
+    $query = $this->db->get('usuario');
+
+    return $query->result_array();
+
+  }
+
+  public function altaSuscrip($tel){
+    $data = array(
+      'alta' => 1
+    );
+    $this->db->where('tel', $tel);
+    $this->db->update('usuario', $data);
+
+    $this->db->where('tel', $tel);
+    $query = $this->db->get('usuario');
+
+    return $query->result_array();
+  }
+
+  public function efectuarCobro($data){
+
+    /*modificamos el saldo del usuario*/
+    $tel = $data['msisdn'];
+    $this->db->select('saldo');
+    $this->db->where('tel', $tel);
+    $aux = $this->db->get('usuario');
+
+    foreach ($aux->result() as $row) {
+      $v = $row->saldo;
+    }
+    $data2 = array(
+      'saldo' => $v - $data['amount']
+    );
+
+    $this->db->where('tel', $tel);
+    $this->db->update('usuario', $data2);
+
+    $this->registrarTransaccion($tel, $data);
+  }
+
+  public function registrarTransaccion($tel, $data){
+    $this->db->select('DNI');
+    $this->db->where('tel', $tel);
+    $aux = $this->db->get('usuario');
+    foreach ($aux->result() as $row) {
+      $dni = $row->DNI;
+    };
+    $data = array(
+      'usuario' => $dni,
+      'tipo' => 'pago',
+      'cantidad' => $data['amount'],
+      'fecha' => standard_date('DATE_W3C', now())
+    );
+  $this->db->insert('transaccion', $data);
+  }
+
+  public function registrarSms($data){
+    $tel = $data['msisdn'];
+    $this->db->select('DNI');
+    $this->db->where('tel', $tel);
+    $aux = $this->db->get('usuario');
+    foreach ($aux->result() as $row) {
+      $dni = $row->DNI;
+    }
+    $data = array(
+      'destino' => $dni,
+      'texto' => $data['text'],
+      'fecha' => standard_date('DATE_W3C', now())
+    );
+  $this->db->insert('sms', $data);
+  }
+
 }

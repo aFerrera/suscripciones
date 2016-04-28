@@ -9,12 +9,12 @@
     <h2 class="sectionHeader">ADMINISTRAR TABLAS</h2>
     <div class="nav-wrapper">
       <ul id="adminMenu" class="">
-        <a href='<?php echo site_url('home/usuarios')?>' class="white-text">USUARIOS</a> ||
-        <a href='<?php echo site_url('home/suscripciones')?>' class="white-text">SUSCRIPCIONES</a> ||
-        <a href='<?php echo site_url('home/transacciones')?>' class="white-text">TRANSACCIONES</a> ||
-        <a href='<?php echo site_url('home/registros')?>' class="white-text">REGISTROS</a> ||
-        <a href='<?php echo site_url('home/wsrequest')?>' class="white-text">WS REQUESTS</a> ||
-        <a href='<?php echo site_url('home/wsresponse')?>' class="white-text">WS RESPONSES</a>
+        <li><a href='<?php echo site_url('home/usuarios')?>' class="white-text">USUARIOS</a></li>
+        <li><a href='<?php echo site_url('home/suscripciones')?>' class="white-text">SUSCRIPCIONES</a></li>
+        <li><a href='<?php echo site_url('home/transacciones')?>' class="white-text">TRANSACCIONES</a></li>
+        <li><a href='<?php echo site_url('home/registros')?>' class="white-text">REGISTROS</a></li>
+        <li><a href='<?php echo site_url('home/wsrequest')?>' class="white-text">WS REQUESTS</a></li>
+        <li><a href='<?php echo site_url('home/sms')?>' class="white-text">SMS</a></li>
       </ul>
     </div>
 
@@ -27,7 +27,7 @@
   <div class="more center-block center-align">
     <h4>COBROS Y MENSAJES</h4>
     <?php echo form_open('WebService/getToken'); ?>
-    <input type="submit" name="submit" id="getToken" value="GetToken" class="waves-light btn deep-orange lighten-4 black-text"/>
+    <input type="submit" name="submit" id="getToken" value="Cobrar suscripciones" class="waves-light btn green accent-2 black-text"/>
   </form>
   </div>
 </main>
