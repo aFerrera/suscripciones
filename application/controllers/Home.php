@@ -144,8 +144,12 @@ class Home extends CI_Controller {
 
   public function administrar()
   {
-
-    $this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
+    if($this->session->userdata('admin')==1){
+      $this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
+    }else{
+      echo '<script language="javascript">alert("Acceso denegado");</script>';
+      $this->index();
+    }
   }
 
 

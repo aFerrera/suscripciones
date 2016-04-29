@@ -13,4 +13,6 @@ $('#myFormCard').card({
 
     // all of the other options from above
 });
+
+$('.edit-icon').hide();
 });

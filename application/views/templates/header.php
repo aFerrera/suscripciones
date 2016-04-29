@@ -47,6 +47,7 @@
 
   th{
       background-image: url('<?=base_url('assets/img/games.png')?>');
+      
   }
   </style>
 </head>

@@ -133,15 +133,4 @@ class Logins extends CI_Controller {
     }
   }
 
-  /*GETUSER
-  public function getUser(){
-    $dni = $this->session->userdata('dni');
-    $data['suscrip'] = $this->Model_suscripciones->get_suscripciones();
-    $data['user'] = $this->Model_usuario->getUser($dni);
-    $this->load->view('templates/header');
-    $this->load->view('home/principal', $data);
-    $this->load->view('templates/footer');
-  }*/
-
-
 }
