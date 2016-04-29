@@ -10,6 +10,7 @@ class WebService extends CI_Controller {
     $this->load->model('Model_webService');
     $this->load->model('Model_usuario');
 
+
   }
 
   public function individualToken(){
@@ -38,49 +39,7 @@ class WebService extends CI_Controller {
     $this->miraSwitch2($responseToken);
   }
 
-  public function miraSwitch2($data){
-    $code = $data['statusCode'];
-    switch ($code) {
-      case 'TOKEN_SUCCESS':
-      echo '<script language="javascript">alert("'.$code.'");</script>';
-      $data['individual'] = 1;
-      $this->getBill($data);
-      break;
 
-      case 'SUCCESS':
-      if($data['tipo']=='PeticionCobro'){
-        echo '<script language="javascript">alert("COBRO REALIZADO!");</script>';
-        $data['text'] = 'Cobro realizado correctamente, se le ha cobrado la cantidad de '.$data['amount'].', le damos de alta! ';
-        $this->Model_webService->efectuarCobro($data);
-        $this->darDeAlta($data);
-        $this->session->set_userdata('alta', 1);
-        $data['individual'] = 1;
-        $this->getSms($data);
-      }
-      if($data['tipo']=='PeticionSms'){
-        echo '<script language="javascript">alert("mensaje enviado, todo correcto");</script>';
-        $this->Model_webService->registrarSms($data);
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/welcome');
-        $this->load->view('templates/footer');
-      }
-      break;
-
-      case 'NO_FUNDS':
-      echo '<script language="javascript">alert("'.$code.', no hay fondos!");</script>';
-      $data['text'] = 'No dispone de fondos suficientes para la suscripción, lo sentimos, no se le dió de alta';
-      $this->getSms($data);
-      break;
-
-      default:
-      echo '<script language="javascript">alert("'.$code.'Algo falló, no se realizaron cambios");</script>';
-      $this->load->view('templates/header');
-      $this->load->view('templates/welcome');
-      $this->load->view('templates/footer');
-      break;
-    }
-  }
 
   /*WS TOKEN REQUEST para cobro general de suscripciones*/
   public function getToken() {
@@ -147,13 +106,79 @@ class WebService extends CI_Controller {
   }
 
 
+
+
+  public function darDeBaja($data){
+    $tel = $data['msisdn'];
+
+    $result = $this->Model_webService->bajaSuscrip($tel);
+
+    $usr = $result[0]['nombre'];
+    $sus = 2;
+
+    $this->Model_suscripciones->registrarBaja($usr, $sus);
+  }
+
+  public function darDeAlta($data){
+    $tel = $data['msisdn'];
+
+    $result = $this->Model_webService->altaSuscrip($tel);
+
+    $usr = $result[0]['nombre'];
+    $sus = 2;
+
+    $this->Model_suscripciones->registrarAlta($usr, $sus);
+  }
+
+  public function miraSwitch2($data){
+    $code = $data['statusCode'];
+    switch ($code) {
+      case 'TOKEN_SUCCESS':
+      echo '<script language="javascript">alert("'.$code.'");</script>';
+      $data['individual'] = 1;
+      $this->getBill($data);
+      break;
+
+      case 'SUCCESS':
+      if($data['tipo']=='PeticionCobro'){
+        echo '<script language="javascript">alert("COBRO REALIZADO!");</script>';
+        $data['text'] = 'Cobro realizado correctamente, se le ha cobrado la cantidad de '.$data['amount'].', le damos de alta! ';
+        $this->Model_webService->efectuarCobro($data);
+        $this->darDeAlta($data);
+        $this->session->set_userdata('alta', 1);
+        $data['individual'] = 1;
+        $this->getSms($data);
+      }
+      if($data['tipo']=='PeticionSms'){
+        echo '<script language="javascript">alert("Mensaje de texto enviado.");</script>';
+        $this->Model_webService->registrarSms($data);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/welcome');
+        $this->load->view('templates/footer');
+      }
+      break;
+
+      case 'NO_FUNDS':
+      echo '<script language="javascript">alert("'.$code.', no hay fondos!");</script>';
+      $data['text'] = 'No dispone de fondos suficientes para la suscripción, lo sentimos, no se le dió de alta';
+      $this->getSms($data);
+      break;
+
+      default:
+      echo '<script language="javascript">alert("'.$code.'Algo falló, reintentando..");</script>';
+      $this->individualToken();
+      break;
+    }
+  }
+
   /*COMPROBACIÓN RESPONSES*/
   public function miraSwitch($data){
     $code = $data['statusCode'];
 
     switch ($code) {
       case 'TOKEN_SUCCESS':
-      echo '<script language="javascript">alert("'.$code.'");</script>';
+
       $data['individual'] = 0;
       $this->getBill($data);
       break;
@@ -167,7 +192,7 @@ class WebService extends CI_Controller {
         $this->getSms($data);
       }
       if($data['tipo']=='PeticionSms'){
-        echo '<script language="javascript">alert("mensaje enviado, todo correcto");</script>';
+        echo '<script language="javascript">alert("mensaje de texto enviado.");</script>';
         $this->Model_webService->registrarSms($data);
 
         $this->load->view('templates/header');
@@ -238,28 +263,6 @@ class WebService extends CI_Controller {
       # code...
       break;
     }
-  }
-
-  public function darDeBaja($data){
-    $tel = $data['msisdn'];
-
-    $result = $this->Model_webService->bajaSuscrip($tel);
-
-    $usr = $result[0]['nombre'];
-    $sus = 2;
-
-    $this->Model_suscripciones->registrarBaja($usr, $sus);
-  }
-
-  public function darDeAlta($data){
-    $tel = $data['msisdn'];
-
-    $result = $this->Model_webService->altaSuscrip($tel);
-
-    $usr = $result[0]['nombre'];
-    $sus = 2;
-
-    $this->Model_suscripciones->registrarAlta($usr, $sus);
   }
 
 }

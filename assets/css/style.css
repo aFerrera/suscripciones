@@ -122,6 +122,9 @@ nav.navbar-material {
 }
 
 #signIn{
+  margin-top: 40px;
+  border: solid 1px #584b4f;
+  padding: 20px;
   width: 80%;
 
 }
@@ -129,7 +132,9 @@ nav.navbar-material {
 header{
   background-color: #584b4f;
 }
-
+footer{
+  background-color: #584b4f !important;
+}
 
 main{
   min-height: 100%;
@@ -212,4 +217,18 @@ background-color: white;
 .cartas{
 margin: 0 auto;
 
+}
+
+.edit-icon{
+  display: none !important;
+}
+
+div.pGroup{
+
+  height: 50px !important;
+  width: 100px !important;
+}
+
+.flexigrid div.pDiv {
+    white-space: normal !important;
 }
