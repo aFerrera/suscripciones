@@ -150,7 +150,6 @@ class WebService extends CI_Controller {
         $this->getSms($data);
       }
       if($data['tipo']=='PeticionSms'){
-        echo '<script language="javascript">alert("Cobro realizado correctamente, se le ha cobrado la cantidad de '.$data['amount'].', le damos de alta!");</script>';
         $this->Model_webService->registrarSms($data);
 
         $this->load->view('templates/header');
