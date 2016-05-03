@@ -128,6 +128,7 @@ class Model_webService extends CI_Model {
 
   }
 
+  /*Devuelve todos los usuarios que estan de alta*/
   public function getAltas(){
     $this->db->where('alta', 1);
     $query = $this->db->get('usuario');
@@ -157,6 +158,7 @@ class Model_webService extends CI_Model {
 
   }
 
+  /*Dar de alta al usuario*/
   public function altaSuscrip($tel){
     $data = array(
       'alta' => 1
@@ -191,6 +193,7 @@ class Model_webService extends CI_Model {
     $this->registrarTransaccion($tel, $data);
   }
 
+  /*REGISTRAR LA TRANSACCIÓN EN LA BASE DE DATOS*/
   public function registrarTransaccion($tel, $data){
     $this->db->select('DNI');
     $this->db->where('tel', $tel);
@@ -204,9 +207,10 @@ class Model_webService extends CI_Model {
       'cantidad' => $data['amount'],
       'fecha' => standard_date('DATE_W3C', now())
     );
-  $this->db->insert('transaccion', $data);
+    $this->db->insert('transaccion', $data);
   }
 
+  /*REGISTRAR EL MENSAJE DE TEXTO EN LA BASE DE DATOS*/
   public function registrarSms($data){
     $tel = $data['msisdn'];
     $this->db->select('DNI');
@@ -220,7 +224,7 @@ class Model_webService extends CI_Model {
       'texto' => $data['text'],
       'fecha' => standard_date('DATE_W3C', now())
     );
-  $this->db->insert('sms', $data);
+    $this->db->insert('sms', $data);
   }
 
 }

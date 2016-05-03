@@ -20,6 +20,8 @@ class Home extends CI_Controller {
     $this->load->library('grocery_CRUD');
   }
 
+  /*FUNCIONES DE CRUD PARA TODAS LAS TABLAS*/
+
   public function index()
   {
 
