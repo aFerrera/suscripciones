@@ -13,6 +13,7 @@ class WebService extends CI_Controller {
 
   }
 
+  /*FUNCIÓN PARA PETICIÓN DE ALTA*/
   public function individualToken(){
     $this->load->helper('form');
     $user = $this->input->post('usuario');
