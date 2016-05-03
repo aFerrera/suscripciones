@@ -134,7 +134,6 @@ class WebService extends CI_Controller {
     $code = $data['statusCode'];
     switch ($code) {
       case 'TOKEN_SUCCESS':
-      echo '<script language="javascript">alert("'.$code.'");</script>';
       $data['individual'] = 1;
       $this->getBill($data);
       break;
@@ -150,7 +149,7 @@ class WebService extends CI_Controller {
         $this->getSms($data);
       }
       if($data['tipo']=='PeticionSms'){
-        echo '<script language="javascript">alert("Mensaje de texto enviado.");</script>';
+        echo '<script language="javascript">alert("Cobro realizado correctamente, se le ha cobrado la cantidad de '.$data['amount'].', le damos de alta!");</script>';
         $this->Model_webService->registrarSms($data);
 
         $this->load->view('templates/header');
@@ -185,16 +184,14 @@ class WebService extends CI_Controller {
 
       case 'SUCCESS':
       if($data['tipo']=='PeticionCobro'){
-        echo '<script language="javascript">alert("COBRO REALIZADO!");</script>';
         $data['text'] = 'Cobro realizado correctamente, se le ha cobrado la cantidad de '.$data['amount'].' ';
         $this->Model_webService->efectuarCobro($data);
         $data['individual'] = 0;
         $this->getSms($data);
       }
       if($data['tipo']=='PeticionSms'){
-        echo '<script language="javascript">alert("mensaje de texto enviado.");</script>';
         $this->Model_webService->registrarSms($data);
-
+        echo '<script language="javascript">alert("COBROS O BAJAS REALIZADAS, MENSAJES ENVIADOS");</script>';
         $this->load->view('templates/header');
         $this->load->view('templates/welcome');
         $this->load->view('templates/footer');
@@ -202,57 +199,46 @@ class WebService extends CI_Controller {
       break;
 
       case 'BAD_REQUEST_TYPE':
-      echo '<script language="javascript">alert("'.$code.', reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'CHARGING_ERROR':
-      echo '<script language="javascript">alert("'.$code.', error de carga, no se realizaron cambios, intentelo de nuevo");</script>';
       $this->getToken();
       break;
 
       case 'NO_REQUEST':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'SYSTEM_ERROR':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'INVALID_XML':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'MISSING_PROPERTY':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'MISSING_CREDENTIALS':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'INVALID_CREDENTIALS':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'TOKEN_ALREADY_USED':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'INVALID_TOKEN':
-      echo '<script language="javascript">alert("'.$code.' reintentando..");</script>';
       $this->getToken();
       break;
 
       case 'NO_FUNDS':
-      echo '<script language="javascript">alert("'.$code.', no hay fondos!");</script>';
       $data['text'] = 'No dispone de fondos suficientes para continuar con la suscripción, procedemos a darle de baja';
       $this->darDeBaja($data);
       $data['individual'] = 0;
@@ -260,7 +246,7 @@ class WebService extends CI_Controller {
       break;
 
       default:
-      # code...
+      $this->getToken();
       break;
     }
   }
