@@ -85,7 +85,6 @@ class Model_webService extends CI_Model {
 
     $data['tipo'] = 'PeticionSms';
     $data['transaction'] = $trans;
-    echo '<script language="javascript">alert("texto a enviar -> '.$data['text'].'");</script>';
 
     $req = '<?xml version="1.0" encoding="UTF-8"?>
     <request>

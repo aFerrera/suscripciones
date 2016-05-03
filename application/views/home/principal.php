@@ -40,6 +40,18 @@
                   <tr>
                     <td>Coste mensual</td><td><?php echo $i['coste']?>€</td>
                   </tr>
+                  <tr>
+                    <td>
+                      Darme de baja
+                    </td>
+                    <td>
+                        <?= form_open('Suscripciones/baja', array('class'=>'form-horizontal')); ?>
+                        <input type="hidden" name="customer" value="<?php echo $this->session->userdata('usuario')?>">
+                        <input type="hidden" name="sus" value="<?php echo $i['id_suscripcion']?>">
+                        <input type="submit" name="enviaParaBaja" value="BAJA" class="btn waves-light waves-effect green accent-2 black-text">
+                      </form>
+                    </td>
+                  </tr>
 
                 <?php endforeach; ?>
               </table>

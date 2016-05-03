@@ -47,7 +47,7 @@
 
   th{
       background-image: url('<?=base_url('assets/img/games.png')?>');
-      
+
   }
   </style>
 </head>
@@ -61,6 +61,7 @@
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul id="topMenu" class="right hide-on-med-and-down">
           <li><a href="<?=site_url('home/index')?>">HOME</a></li>
+      
 
           <?php if($this->session->userdata('admin') == 1){?>
             <li><a href="<?=site_url('home/administrar')?>">Administrador</a></li>

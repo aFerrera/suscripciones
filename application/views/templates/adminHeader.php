@@ -26,6 +26,9 @@
   </div>
   <div class="more center-block center-align">
     <h4>COBROS Y MENSAJES</h4>
+    <p>
+      La ejecución de cobros está programada para día 1 de cada mes, si lo desea puede hacerlo ahora pinxando en el siguiente botón.
+    </p>
     <?php echo form_open('WebService/getToken'); ?>
     <input type="submit" name="submit" id="getToken" value="Cobrar suscripciones" class="waves-light btn green accent-2 black-text"/>
   </form>
