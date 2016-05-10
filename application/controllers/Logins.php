@@ -11,6 +11,9 @@ class Logins extends CI_Controller {
     $this->form_validation->set_message('loginok', 'Usuario o clave incorrectos');
     $this->form_validation->set_message('matches', '%s no coincide con %s');
     $this->form_validation->set_message('valid_email', 'La dirección de e-mail debe ser válida');
+    $this->form_validation->set_message('is_unique', 'este %s ya existe');
+
+
     //$this->form_validation->set_message('Email', 'La dirección de E-mail tiene que ser valida');
 
     $this->CI = & get_instance(); // Esto para acceder a la instancia que carga la librería
@@ -107,10 +110,10 @@ class Logins extends CI_Controller {
 
     $this->form_validation->set_rules('newUser', 'User', 'required');
     $this->form_validation->set_rules('newDni', 'Dni', 'required');
-    $this->form_validation->set_rules('newLogin', 'LoginName', 'required');
+    $this->form_validation->set_rules('newLogin', 'LoginName', 'required|is_unique[usuario.login]');
     $this->form_validation->set_rules('newPass', 'Password', 'required|matches[confirmPass]');
     $this->form_validation->set_rules('confirmPass', 'Password Confirmation', 'required');
-    $this->form_validation->set_rules('newTel', 'Telefono', 'required');
+    $this->form_validation->set_rules('newTel', 'Telefono', 'required|is_unique[usuario.tel]');
     $this->form_validation->set_rules('newMail', 'Email', 'required|valid_email');
 
     $nuevoUser = $this->input->post('newUser');
