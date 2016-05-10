@@ -64,6 +64,11 @@ class WebService extends CI_Controller {
         /*comprobar response*/
         $this->miraSwitch($responseToken);
       endforeach;
+
+      $this->load->view('templates/header');
+      $this->load->view('templates/welcome');
+      $this->load->view('templates/footer');
+
     }else{
       echo '<script language="javascript">alert("EN ESTE MOMENTO NO HAY USUARIOS DADOS DE ALTA");</script>';
       $this->load->view('templates/header');
@@ -191,10 +196,11 @@ class WebService extends CI_Controller {
       }
       if($data['tipo']=='PeticionSms'){
         $this->Model_webService->registrarSms($data);
-        echo '<script language="javascript">alert("COBROS O BAJAS REALIZADAS, MENSAJES ENVIADOS");</script>';
+        /*
         $this->load->view('templates/header');
         $this->load->view('templates/welcome');
         $this->load->view('templates/footer');
+        */
       }
       break;
 
